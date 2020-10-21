@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* rgba(255, 198, 9, 0.548) */
+body{
+    font-family: Lato ,sans-serif;
+    text-align: center;
+    background-color: rgba(255, 198, 9, 0.548);
+}
+
+.container{
+    width: 700px;
+    margin: 0 auto;
+}
+.container h1{
+    font-family: Krona One,sans-serif;
+    text-transform: uppercase;
+    margin: 20px auto;
+    font-size: 40px;
+}
+.container p{
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+#guess{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.container img{
+    height: 250px;
+    width: 150px;
+}
+.wrong-result{
+    font-size: 40px;
+    /* font-family: Krona One,sans-serif; */
+    text-transform: uppercase;
+    margin: 40px 0 10px 0;
+    color: rgb(212, 72, 72);
+
+}
+.correct-result{
+    font-size: 40px;
+    /* font-family: Krona One,sans-serif; */
+    text-transform: uppercase;
+    margin: 40px 0 10px 0;
+    color:rgb(47, 194, 47);
+
+}
+.guess-word{
+    display: flex;
+    justify-content:center;
+    margin: 50px 0 20px 0;
+}
+
+.word{
+    border-bottom: 3px solid gray;
+    width: 30px;
+    height:30px;
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.keyboard{
+    display: inline-block;
+    margin: 20px 0;
+
+}
+.keyboard button:hover{
+    border: 1px solid rgb(3, 53, 94);;
+    color: rgb(3, 53, 94);
+    background: transparent;
+}
+
+/* rgb(52, 241, 5) */
+/* #63e511 */
+.key-btn{
+    margin: 10px 5px;
+    width: 40px;
+    height: 40px;
+    background: rgb(3, 53, 94);
+    outline: none;
+    border: 1px solid rgb(3, 53, 94);
+    color:#fff;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: border 0.2s , color 0.2s , background 0.2s;
+}
+
+
+.reset-btn{
+    width: 80px;
+    height: 40px;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid rgb(27, 94, 148);
+    background-color:rgb(27, 94, 148);
+    border-radius: 3px;
+    text-transform: uppercase;
+    padding: 0 5px;
+    outline:none;
+}
+
+.disable {
+    pointer-events: none;
+    background: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.514);
+    color:rgba(54, 52, 52, 0.596);
+}
