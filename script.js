@@ -1,33 +1,51 @@
+const words = [
+    "account", "act", "addition", "adjustment", "advertisement", "agreement", "air", "amount", "amusement", "animal", "answer", "apparatus", "approval", "argument", "art", "attack", "attempt", "attention", "attraction", "authority",
+    "back", "balance", "base", "behaviour", "belief", "birth", "bit", "bite", "blood", "blow", "body", "brass", "bread", "breath", "brother", "building", "burn", "burst", "business", "butter",
+    "canvas", "care", "cause", "chalk", "chance", "change", "cloth", "coal", "colour", "comfort", "committee", "company", "comparison", "competition", "condition", "connection", "control", "cook", "copper", "copy", "cork", "cotton", "cough", "country", "cover", "crack", "credit", "crime", "crush", "cry", "current", "curve",
+    "damage", "danger", "daughter", "day", "death", "debt", "decision", "degree", "design", "desire", "destruction", "detail", "development", "digestion", "direction", "discovery", "discussion", "disease", "disgust", "distance", "distribution", "division", "doubt", "drink", "driving", "dust",
+    "earth", "edge", "education", "effect", "end", "error", "example", "exchange", "existence", "expansion", "experience", "expert",
+    "fact", "fall", "family", "father", "fear", "feeling", "fiction", "field", "fight", "fire", "flame", "flight", "flower", "fold", "food", "force", "form", "friend", "front", "fruit",
+    "game", "garden", "gate", "general", "gentleman", "gift", "give", "glad", "glass", "goat", "god", "gold", "good", "goodbye", "grandfather", "grandmother", "grass", "grave", "great", "green", "gray", "ground", "group", "grow", "gun",
+    "hair", "half", "hall", "hammer", "hand", "happy", "hard", "hat", "hate", "head", "healthy", "hear", "heavy", "heart", "heaven", "height", "hello", "help", "hen", "hide", "high", "hill", "hit", "hobby", "hold", "hole", "holiday", "home", "hope", "horse", "hospital", "hot", "hotel", "house", "hundred", "hungry", "hour", "hurry", "husband", "hurt",
+
+
+];
+
+let presentWord = words[Math.floor(Math.random() * words.length)].toUpperCase().split('');
+let guessedWord = presentWord.map(el => "");
+let wrongWordsCount = 0;
+
+let definitions, synonyms;
 window.addEventListener('load', () => {
     const letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(el =>
         `<button class="key-btn" id="${el}">${el}</button>`).join('');
 
     document.querySelector('.keyboard').innerHTML = letter;
+
+    // fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`
+    // ).then(response=>{
+    //     response.json().then(data=>{
+    //         console.log(data);
+    //     });
+    // });
+    
 });
-const words = [
-    "account","act","addition","adjustment","advertisement","agreement","air","amount","amusement","animal","answer","apparatus","approval","argument","art","attack","attempt","attention","attraction","authority",
-    "back","balance","base","behaviour","belief","birth","bit","bite","blood","blow","body","brass","bread","breath","brother","building","burn","burst","business","butter",
-    "canvas","care","cause","chalk","chance","change","cloth","coal","colour","comfort","committee","company","comparison","competition","condition","connection","control","cook","copper","copy","cork","cotton","cough","country","cover","crack","credit","crime","crush","cry","current","curve",
-    "damage","danger","daughter","day","death","debt","decision","degree","design","desire","destruction","detail","development","digestion","direction","discovery","discussion","disease","disgust","distance","distribution","division","doubt","drink","driving","dust",
-    "earth","edge","education","effect","end","error","example","exchange","existence","expansion","experience","expert",
-    "fact","fall","family","father","fear","feeling","fiction","field","fight","fire","flame","flight","flower","fold","food","force","form","friend", "front","fruit",
-    "game", "garden", "gate", "general", "gentleman", "gift", "give", "glad", "glass", "goat", "god", "gold", "good", "goodbye", "grandfather", "grandmother", "grass", "grave", "great", "green", "gray", "ground", "group", "grow", "gun",
-    "hair", "half", "hall", "hammer", "hand", "happy", "hard", "hat", "hate","head", "healthy", "hear", "heavy", "heart", "heaven", "height", "hello", "help", "hen", "hide", "high", "hill", "hit", "hobby", "hold", "hole", "holiday", "home", "hope", "horse", "hospital", "hot", "hotel", "house", "hundred", "hungry", "hour", "hurry", "husband", "hurt",
 
 
-];
-const string="hair, half, hall, hammer, hand, happen, happy, hard, hat, hate, have, he, head, healthy, hear, heavy, heart, heaven, height, hello, help, hen, her, here, hers, hide, high, hill, him, his, hit, hobby, hold, hole, holiday, home, hope, horse, hospital, hot, hotel, house, how, hundred, hungry, hour, hurry, husband, hurt";
-const func=string=>{
-    const convert=string.split(', ').map(el=>el);
-    console.log(convert);
-}
+document.querySelector('.hint-btn').addEventListener('click', () => {
+    document.querySelector('.modal-bg').style.display = 'flex';
+});
+document.querySelector('.close-btn').addEventListener('click', () => {
+    document.querySelector('.modal-bg').style.display = 'none';
+});
 
-func(string);
+// const string="hair, half, hall, hammer, hand, happen, happy, hard, hat, hate, have, he, head, healthy, hear, heavy, heart, heaven, height, hello, help, hen, her, here, hers, hide, high, hill, him, his, hit, hobby, hold, hole, holiday, home, hope, horse, hospital, hot, hotel, house, how, hundred, hungry, hour, hurry, husband, hurt";
+// const func=string=>{
+//     const convert=string.split(', ').map(el=>el);
+//     console.log(convert);
+// };
 
-let presentWord = words[Math.floor(Math.random()* words.length)].toUpperCase().split('');
-let guessedWord = presentWord.map(el => "");
-let wrongWordsCount = 0;
-
+// func(string);
 
 const loadGuessedWordMarkup = letter => {
     const markup = `<div class="word">${letter}</div>`;
