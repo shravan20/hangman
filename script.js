@@ -54,7 +54,7 @@ document.querySelector('.close-btn').addEventListener('click', () => {
 //     console.log(convert);
 // };
 
-func(string);
+// func(string);
 
 const loadGuessedWordMarkup = letter => {
     const markup = `<div class="word">${letter}</div>`;
