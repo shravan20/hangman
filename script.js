@@ -32,6 +32,11 @@ window.addEventListener('load', () => {
                     return false;
                 }
             });
+            let sampSynonyms=synonyms;
+            sampSynonyms.forEach((el,index)=>{
+                if(el.toUpperCase()===presentWord.join(''))
+                    synonyms.splice(index,1);
+            });
          });
     });
     
