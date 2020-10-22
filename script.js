@@ -7,45 +7,54 @@ const words = [
     "fact", "fall", "family", "father", "fear", "feeling", "fiction", "field", "fight", "fire", "flame", "flight", "flower", "fold", "food", "force", "form", "friend", "front", "fruit",
     "game", "garden", "gate", "general", "gentleman", "gift", "give", "glad", "glass", "goat", "god", "gold", "good", "goodbye", "grandfather", "grandmother", "grass", "grave", "great", "green", "gray", "ground", "group", "grow", "gun",
     "hair", "half", "hall", "hammer", "hand", "happy", "hard", "hat", "hate", "head", "healthy", "hear", "heavy", "heart", "heaven", "height", "hello", "help", "hen", "hide", "high", "hill", "hit", "hobby", "hold", "hole", "holiday", "home", "hope", "horse", "hospital", "hot", "hotel", "house", "hundred", "hungry", "hour", "hurry", "husband", "hurt",
-
-
+    "sad", "safe", "sail", "salt", "sand", "save", "say", "school", "science", "scissors", "search", "seat", "second", "see", "sell", "send", "sentence", "serve", "seven", "several", "sex", "shade", "shadow", "shake", "shape", "share", "sharp", "sheep", "sheet", "shelf", "shine", "ship", "shirt", "shoe", "shoot", "shop", "short", "shoulder", "shout", "show", "sick", "side", "signal", "silence", "silly", "silver", "similar", "simple", "single", "sing", "sink", "sister", "sit", "six", "size", "skill", "skin", "skirt", "sky", "sleep", "slip", "slow", "small", "smell", "smile", "smoke", "snow", "soap", "sock", "soft", "someone", "something", "sometimes", "son", "soon", "sorry", "sound", "soup", "south", "space", "speak", "special", "speed", "spell", "spend", "spoon", "sport", "spread", "spring", "square", "stamp", "stand", "star", "start", "station", "stay", "steal", "steam", "step", "still","stomach", "stone", "stop", "store", "storm", "story", "strange", "street", "strong", "structure", "student", "study", "stupid", "subject", "substance", "successful", "sudden", "sugar", "suitable", "summer", "sun", "sunny", "support", "sure", "surprise", "sweet", "swim", "sword"
 ];
 
 let presentWord = words[Math.floor(Math.random() * words.length)].toUpperCase().split('');
 let guessedWord = presentWord.map(el => "");
 let wrongWordsCount = 0;
 
-let definitions, synonyms;
+let synonyms,definition;
 window.addEventListener('load', () => {
     const letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(el =>
         `<button class="key-btn" id="${el}">${el}</button>`).join('');
 
     document.querySelector('.keyboard').innerHTML = letter;
 
-    // fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`
-    // ).then(response=>{
-    //     response.json().then(data=>{
-    //         console.log(data);
-    //     });
-    // });
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`
+    ).then(response=>{
+        response.json().then(data=>{
+            let definitions=data[0].meanings[0].definitions;
+            definitions.every(el=>{
+                if('definition' in el && 'synonyms' in el){
+                    definition=el.definition;
+                    synonyms=el.synonyms.splice(0,3);
+                    return false;
+                }
+            });
+         });
+    });
     
 });
 
 
 document.querySelector('.hint-btn').addEventListener('click', () => {
     document.querySelector('.modal-bg').style.display = 'flex';
+    document.getElementById('definition').textContent=definition;
+    document.getElementById('synonym').textContent=synonyms;
 });
 document.querySelector('.close-btn').addEventListener('click', () => {
     document.querySelector('.modal-bg').style.display = 'none';
 });
 
-// const string="hair, half, hall, hammer, hand, happen, happy, hard, hat, hate, have, he, head, healthy, hear, heavy, heart, heaven, height, hello, help, hen, her, here, hers, hide, high, hill, him, his, hit, hobby, hold, hole, holiday, home, hope, horse, hospital, hot, hotel, house, how, hundred, hungry, hour, hurry, husband, hurt";
+
+// const string="stomach, stone, stop, store, storm, story, strange, street, strong, structure, student, study, stupid, subject, substance, successful, sudden, sugar, suitable, summer, sun, sunny, support, sure, surprise, sweet, swim, sword";
 // const func=string=>{
 //     const convert=string.split(', ').map(el=>el);
 //     console.log(convert);
 // };
 
-// func(string);
+func(string);
 
 const loadGuessedWordMarkup = letter => {
     const markup = `<div class="word">${letter}</div>`;
@@ -72,14 +81,12 @@ const renderResetButton = type => {
 const refreshPage = () => window.location.reload();
 
 const renderResultMarkup = type => {
-    const result = type === 'correct' ? "Well Done!!" : "You Lost!!"
+    const result = type === 'correct' ? "Well Done!!" : "You Lost!!";
     const markup = `<h2 class="${type}-result">${result}</h2>`;
     document.querySelector('.guess-word').insertAdjacentHTML('afterend', markup);
 };
 
 const checkIfCorrect = () => {
-    console.log(presentWord);
-    console.log(guessedWord);
     if (guessedWord.join('') === presentWord.join('')) {
         renderResetButton();
         removeKeyBoard();
