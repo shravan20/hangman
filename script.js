@@ -14,7 +14,7 @@ let presentWord = words[Math.floor(Math.random() * words.length)].toUpperCase().
 let guessedWord = presentWord.map(el => "");
 let wrongWordsCount = 0;
 
-let synonyms,definition;
+let synonyms='Not Available!!',definition='Not Available!!';
 window.addEventListener('load', () => {
     const letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(el =>
         `<button class="key-btn" id="${el}">${el}</button>`).join('');
@@ -23,20 +23,21 @@ window.addEventListener('load', () => {
 
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`
     ).then(response=>{
+        document.querySelector('.heading').style.display='block';
         response.json().then(data=>{
-            let definitions=data[0].meanings[0].definitions;
-            definitions.every(el=>{
-                if('definition' in el && 'synonyms' in el){
-                    definition=el.definition;
-                    synonyms=el.synonyms.splice(0,3);
-                    return false;
-                }
-            });
-            let sampSynonyms=synonyms;
-            sampSynonyms.forEach((el,index)=>{
-                if(el.toUpperCase()===presentWord.join(''))
-                    synonyms.splice(index,1);
-            });
+            let definitions=data[0].meanings[0].definitions[0];
+            definition=definitions.definition;
+            synonyms=definitions.synonyms;
+            if(synonyms){
+                synonyms=synonyms.splice(0,3);
+                let sampSynonyms=synonyms;
+                sampSynonyms.forEach((el,index)=>{
+                    if(el.toUpperCase()===presentWord.join(''))
+                        synonyms.splice(index,1);
+                });
+            }
+            else
+                synonyms='Not Available!!';
          });
     });
     
