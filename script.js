@@ -15,15 +15,16 @@ let guessedWord = presentWord.map(el => "");
 let wrongWordsCount = 0;
 
 let synonyms='Not Available!!',definition='Not Available!!';
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     const letter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(el =>
         `<button class="key-btn" id="${el}">${el}</button>`).join('');
 
     document.querySelector('.keyboard').innerHTML = letter;
 
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`
-    ).then(response=>{
-        document.querySelector('.heading').style.display='block';
+    let response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${presentWord.join('')}`)
+
+    document.querySelector('.heading').style.display='block';
+    
         response.json().then(data=>{
             let definitions=data[0].meanings[0].definitions[0];
             definition=definitions.definition;
@@ -39,7 +40,6 @@ window.addEventListener('load', () => {
             else
                 synonyms='Not Available!!';
          });
-    });
     
 });
 
